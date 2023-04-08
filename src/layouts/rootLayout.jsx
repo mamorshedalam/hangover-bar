@@ -7,7 +7,7 @@ import logoImg from "../assets/images/logo/logo.png";
 export default function RootLayout() {
      return (
           <div className="flex flex-col min-h-screen">
-               <header className="sl-container flex justify-between items-center font-semibold text-base py-6">
+               <header className="sl-container flex justify-between items-center font-semibold text-lg py-6">
                     <Link to={`/`} className="max-w-[12rem]"><img src={logoImg} alt="logo" /></Link>
                     <nav className="flex justify-center gap-9">
                          <NavLink to={`/`} className={({ isActive }) => isActive ? "text-red-500" : "hover:text-red-500 sl-animated-lg"}>Home</NavLink>

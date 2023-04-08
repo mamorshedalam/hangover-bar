@@ -22,20 +22,17 @@
 
   /* BUTTON */
   .sl-btn-primary {
-    @apply bg-amber-400 bg-gradient-to-r from-amber-300 to-amber-500 text-white rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+    @apply bg-amber-400 bg-gradient-to-r from-amber-300 to-amber-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
   }
   .sl-btn-red {
-    @apply bg-red-400 bg-gradient-to-r from-red-300 to-red-500 text-white rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+    @apply bg-red-400 bg-gradient-to-r from-red-300 to-red-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
   }
   .sl-btn-blue {
-    @apply bg-sky-400 bg-gradient-to-r from-sky-300 to-sky-500 text-white rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+    @apply bg-sky-400 bg-gradient-to-r from-sky-300 to-sky-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
   }
 }
 
 @layer base {
-  body {
-    @apply text-slate-950 text-sm;
-  }
 
   section {
     @apply z-10;
@@ -54,5 +51,24 @@
 
   img {
     @apply w-full object-cover;
+  }
+}
+
+@layer utilities {
+  .cardBar::-webkit-scrollbar {
+    width: 0.3rem;
+  }
+
+  .cardBar::-webkit-scrollbar-track {
+    background-color: rgb(161 161 170);
+    border-radius: 10px;
+  }
+
+  .cardBar::-webkit-scrollbar-thumb {
+    background: #faa31e;
+    border-radius: 10px;
+  }
+  .sl-scroll-hidden::-webkit-scrollbar {
+    display: none;
   }
 }
