@@ -30,7 +30,7 @@ const routes = createBrowserRouter([
                          element: <Contact />
                     },
                     {
-                         path: '/product/:id',
+                         path: '/product/:category/:id',
                          element: <ProductDetail />
                     },
                     {

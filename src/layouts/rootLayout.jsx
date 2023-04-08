@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faEnvelope, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons'
 import logoImg from "../assets/images/logo/logo.png";
+import Button from "../components/Button/button";
 
 export default function RootLayout() {
      return (
@@ -15,7 +16,7 @@ export default function RootLayout() {
                          <NavLink to={`/about`} className={({ isActive }) => isActive ? "text-red-500" : "hover:text-red-500 sl-animated-lg"}>About Us</NavLink>
                          <NavLink to={`/contact`} className={({ isActive }) => isActive ? "text-red-500" : "hover:text-red-500 sl-animated-lg"}>Contact</NavLink>
                     </nav>
-                    <button type="button" className="sl-btn-primary">Sign Up</button>
+                    <Button type="button">Sign Up</Button>
                </header>
                <main className="sl-container flex-grow">
                     <Outlet />

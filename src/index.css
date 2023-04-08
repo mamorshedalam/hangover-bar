@@ -21,19 +21,18 @@
   }
 
   /* BUTTON */
-  .sl-btn-primary {
-    @apply bg-amber-400 bg-gradient-to-r from-amber-300 to-amber-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+  .sl-primary {
+    @apply bg-amber-400 bg-gradient-to-r from-amber-300 to-amber-500;
   }
-  .sl-btn-red {
-    @apply bg-red-400 bg-gradient-to-r from-red-300 to-red-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+  .sl-red {
+    @apply bg-red-400 bg-gradient-to-r from-red-300 to-red-500;
   }
-  .sl-btn-blue {
-    @apply bg-sky-400 bg-gradient-to-r from-sky-300 to-sky-500 text-white font-medium rounded-full py-3 px-9 hover:text-slate-950 sl-animated-lg;
+  .sl-blue {
+    @apply bg-sky-400 bg-gradient-to-r from-sky-300 to-sky-500;
   }
 }
 
 @layer base {
-
   section {
     @apply z-10;
   }
@@ -50,7 +49,7 @@
   }
 
   img {
-    @apply w-full object-cover;
+    @apply w-full;
   }
 }
 
