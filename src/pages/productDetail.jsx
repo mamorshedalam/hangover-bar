@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import axios from "axios";
 import { Autoplay } from "swiper";
+import axios from "axios";
 
 export default function ProductDetail() {
      const navigate = useNavigate();
@@ -72,6 +72,7 @@ export default function ProductDetail() {
                               <Swiper modules={[Autoplay]}
                                    spaceBetween={40}
                                    slidesPerView={3}
+                                   loop={true}
                                    autoplay={{
                                         delay: 1500,
                                         disableOnInteraction: false,

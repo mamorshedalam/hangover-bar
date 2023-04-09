@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faQuoteRight, faStar } from "@fortawesome/free-solid-svg-icons";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from "swiper";
+import 'swiper/css';
+import axios from "axios";
 import Button from "../components/Button/button";
 import heroImg from "../assets/images/banner1.jpg";
 import MobileImg from "../assets/images/MobileLogo.png";
@@ -15,9 +19,30 @@ import payOrderImg from "../assets/images/icon/payOrderIcon.jpg";
 import BecomeaDriverImg from "../assets/images/icon/BecomeaDriver.jpg";
 import enjoyFoodImg from "../assets/images/icon/enjoyFood.jpg";
 import reviewImg1 from "../assets/images/team/samMatumban_review.jpeg";
-import reviewImg2 from "../assets/images/team/lilyRoger_review.jpeg";
+import Product from "../components/Cart/product";
 
 export default function Index() {
+     const effectRun = useRef(false)
+     const [data, setData] = useState([]);
+     let filterCart;
+     const category = ["pizza", "dessert", "drinks"];
+
+     useEffect(() => {
+          if (effectRun.current === true) {
+               async function fetchData() {
+                    filterCart = category[Math.floor(Math.random() * category.length)]
+                    try {
+                         const response = await axios.get('/public/db.json');
+                         const dataArray = response.data[filterCart];
+                         setData(dataArray)
+                    } catch (error) {
+                         console.error(error);
+                    }
+               }
+               fetchData();
+          }
+          return () => { effectRun.current = true }
+     }, [])
 
      return (
           <>
@@ -71,6 +96,16 @@ export default function Index() {
                     </div>
                     <div className="w-1/2">
                          <img src={MobileImg} alt="" />
+                    </div>
+               </section>
+
+               <section className="py-10">
+                    <div className="w-1/2 text-center space-y-3 py-7 mx-auto">
+                         <span className="text-lg text-red-500">Our Recommendation</span>
+                         <h2 className="font-bold text-5xl leading-tight">Best Food In Your Area</h2>
+                    </div>
+                    <div className="grid grid-cols-4 gap-4">
+                         {data && data.length > 0 && data.map((product, index) => index < 4 ? <Product key={index} category={filterCart} product={product} /> : "")}
                     </div>
                </section>
 
@@ -145,20 +180,63 @@ export default function Index() {
                          <span className="text-lg text-red-500">Testimonials</span>
                          <h2 className="font-bold text-5xl leading-tight">Why Our Clients Choose Us</h2>
                     </div>
-                    <div className="text-center space-y-4">
-                         <FontAwesomeIcon icon={faQuoteRight} className="text-sky-400 text-7xl" />
-                         <p className="font-medium text-lg"><i>In ornare sapien sed imperdiet viverra. Phasellus orci neque, pulvinar quis tellus sed, dapibus scelerisque magna. Suspendisse quis ipsum eleifend, accumsan massa non, scelerisque mauris. Maecenas facilisis erat sed odio bibendum aliquet.</i></p>
-                         <div className="space-x-2 text-amber-400 text-xl">
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                         </div>
-                         <img src={reviewImg1} alt="" className="w-20 h-20 rounded-full mx-auto" />
-                         <h3 className="font-bold text-xl">Sam Matumban</h3>
-                         <span className="text-amber-400">Customer</span>
-                    </div>
+                    <Swiper modules={[Autoplay]}
+                         spaceBetween={30}
+                         slidesPerView={1}
+                         loop={true}
+                         autoplay={{
+                              delay: 1500,
+                              disableOnInteraction: false,
+                         }}>
+                         <SwiperSlide>
+                              <div className="text-center space-y-4">
+                                   <FontAwesomeIcon icon={faQuoteRight} className="text-sky-400 text-7xl" />
+                                   <p className="font-medium text-lg"><i>In ornare sapien sed imperdiet viverra. Phasellus orci neque, pulvinar quis tellus sed, dapibus scelerisque magna. Suspendisse quis ipsum eleifend, accumsan massa non, scelerisque mauris. Maecenas facilisis erat sed odio bibendum aliquet.</i></p>
+                                   <div className="space-x-2 text-amber-400 text-xl">
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                   </div>
+                                   <img src={reviewImg1} alt="" className="w-20 h-20 rounded-full mx-auto" />
+                                   <h3 className="font-bold text-xl">Sam Matumban</h3>
+                                   <span className="text-amber-400">Customer</span>
+                              </div>
+                         </SwiperSlide>
+                         <SwiperSlide>
+                              <div className="text-center space-y-4">
+                                   <FontAwesomeIcon icon={faQuoteRight} className="text-sky-400 text-7xl" />
+                                   <p className="font-medium text-lg"><i>In ornare sapien sed imperdiet viverra. Phasellus orci neque, pulvinar quis tellus sed, dapibus scelerisque magna. Suspendisse quis ipsum eleifend, accumsan massa non, scelerisque mauris. Maecenas facilisis erat sed odio bibendum aliquet.</i></p>
+                                   <div className="space-x-2 text-amber-400 text-xl">
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                   </div>
+                                   <img src={reviewImg1} alt="" className="w-20 h-20 rounded-full mx-auto" />
+                                   <h3 className="font-bold text-xl">Sam Matumban</h3>
+                                   <span className="text-amber-400">Customer</span>
+                              </div>
+                         </SwiperSlide>
+                         <SwiperSlide>
+                              <div className="text-center space-y-4">
+                                   <FontAwesomeIcon icon={faQuoteRight} className="text-sky-400 text-7xl" />
+                                   <p className="font-medium text-lg"><i>In ornare sapien sed imperdiet viverra. Phasellus orci neque, pulvinar quis tellus sed, dapibus scelerisque magna. Suspendisse quis ipsum eleifend, accumsan massa non, scelerisque mauris. Maecenas facilisis erat sed odio bibendum aliquet.</i></p>
+                                   <div className="space-x-2 text-amber-400 text-xl">
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                        <FontAwesomeIcon icon={faStar} />
+                                   </div>
+                                   <img src={reviewImg1} alt="" className="w-20 h-20 rounded-full mx-auto" />
+                                   <h3 className="font-bold text-xl">Sam Matumban</h3>
+                                   <span className="text-amber-400">Customer</span>
+                              </div>
+                         </SwiperSlide>
+                    </Swiper>
                </section>
 
                <section className="grid grid-cols-2 gap-9 pt-10 pb-32">
