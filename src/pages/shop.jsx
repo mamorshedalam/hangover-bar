@@ -13,7 +13,7 @@ export default function Shop() {
           if (effectRun.current === true) {
                async function fetchData() {
                     try {
-                         const response = await axios.get('/public/db.json');
+                         const response = await axios.get('/db.json');
                          const dataArray = response.data[activeCat];
                          setData(dataArray)
                     } catch (error) {

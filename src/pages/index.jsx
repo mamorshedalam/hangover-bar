@@ -24,16 +24,17 @@ import Product from "../components/Cart/product";
 export default function Index() {
      const effectRun = useRef(false)
      const [data, setData] = useState([]);
-     let filterCart;
+     const [activeCat, setActiveCat] = useState("pizza");
      const category = ["pizza", "dessert", "drinks"];
 
      useEffect(() => {
           if (effectRun.current === true) {
                async function fetchData() {
-                    filterCart = category[Math.floor(Math.random() * category.length)]
+                    const filterCart = category[Math.floor(Math.random() * category.length)]
                     try {
-                         const response = await axios.get('/public/db.json');
+                         const response = await axios.get('/db.json');
                          const dataArray = response.data[filterCart];
+                         setActiveCat(filterCart)
                          setData(dataArray)
                     } catch (error) {
                          console.error(error);
@@ -43,7 +44,6 @@ export default function Index() {
           }
           return () => { effectRun.current = true }
      }, [])
-
      return (
           <>
                <section className="flex flex-wrap py-10">
@@ -105,7 +105,7 @@ export default function Index() {
                          <h2 className="font-bold text-5xl leading-tight">Best Food In Your Area</h2>
                     </div>
                     <div className="grid grid-cols-4 gap-4">
-                         {data && data.length > 0 && data.map((product, index) => index < 4 ? <Product key={index} category={filterCart} product={product} /> : "")}
+                         {data && data.length > 0 && data.map((product, index) => index < 4 ? <Product key={index} category={activeCat} product={product} /> : "")}
                     </div>
                </section>
 

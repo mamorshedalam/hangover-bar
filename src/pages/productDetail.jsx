@@ -19,9 +19,9 @@ export default function ProductDetail() {
           if (effectRun.current === true) {
                async function fetchData() {
                     try {
-                         const response = await axios.get('/public/db.json');
-                         const dataArray = response.data[category];
-                         const product = dataArray.find((product) => product.id === id);
+                         const response = await axios.get('/db.json');
+                         const dataArray = await response.data[category];
+                         const product = await dataArray.find((product) => product.id === id);
                          setSlideData(dataArray)
                          setData(product)
                     } catch (error) {
