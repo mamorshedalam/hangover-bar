@@ -3,9 +3,11 @@ import Input from "../components/Input/Input";
 import Button from "../components/Button/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function Booking() {
-     const [submitted, setSubmitted] = useState(true)
+     const navigate = useNavigate();
+     const [submitted, setSubmitted] = useState(false)
      const data = JSON.parse(localStorage.getItem('order'));
      const [object, setObject] = useState({
           name: "",
@@ -17,20 +19,20 @@ export default function Booking() {
           email: "",
           note: "",
           payMethod: "",
-          bill: data["price"] + 8,
+          bill: "",
      })
 
      function handleSubmit(e) {
           e.preventDefault();
+          setObject({ ...object, bill: (data["price"] * data["quantity"]) + 8 })
           setSubmitted(true)
+          localStorage.removeItem('order');
      }
 
 
      function handleChange(e) {
           const field = e.target;
           if (field.name === 'payment') {
-               const payment = field.id;
-               console.log(payment);
                setObject({ ...object, payMethod: field.id })
           } else {
                const newObject = { ...object }
@@ -79,9 +81,11 @@ export default function Booking() {
                               <h2 className="font-bold uppercase text-2xl border-b border-zinc-400 pb-6">Your order</h2>
                               <ul className="py-4">
                                    <li className="font-medium mb-4">Food <span className="float-right">Total</span></li>
-                                   <li className="mb-3"><span>{data["quantity"]} x</span> {data["name"]} <span className="float-right">$ {data["price"]}</span></li>
-                                   <li className="border-b border-zinc-400 pb-2 mb-2">Delivery Fee <span className="float-right">$ 8</span></li>
-                                   <li>Total <span className="float-right font-bold text-red-500">$ {object["bill"]}</span></li>
+                                   {data && <>
+                                        <li className="mb-3"><span>{data["quantity"]} x</span> {data["name"]} <span className="float-right">$ {data["price"]}</span></li>
+                                        <li className="border-b border-zinc-400 pb-2 mb-2">Delivery Fee <span className="float-right">$ 8</span></li>
+                                        <li>Total <span className="float-right font-bold text-red-500">$ {(data["price"] * data["quantity"]) + 8}</span></li>
+                                   </>}
                               </ul>
                               <h3 className="font-bold mb-4">Payment Method:</h3>
                               <ul>
@@ -94,7 +98,7 @@ export default function Booking() {
                     </aside>
                </form>
                <div className={`${submitted ? "block" : "hidden"} absolute inset-0  max-w-lg rounded-2xl h-fit drop-shadow-xl bg-slate-950 text-white text-center font-bold text-2xl py-10 mx-auto mt-40 z-50`}>
-                    <button onClick={() => { setSubmitted(false) }} className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-red-500"><FontAwesomeIcon icon={faXmark} /></button>
+                    <button onClick={() => { setSubmitted(false); navigate("/") }} className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-red-500"><FontAwesomeIcon icon={faXmark} /></button>
                     <FontAwesomeIcon className="text-7xl text-green-500 mb-6" icon={faCheck} />
                     <h2 className="">YOUR ORDER PLACED</h2>
                </div>

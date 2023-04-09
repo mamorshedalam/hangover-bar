@@ -1,10 +1,11 @@
 import { faAngleDown, faAngleUp, faBagShopping, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
-import slideImg from "../assets/images/slider-img/buger.jpg";
-import categoryImg from "../assets/images/category/talerz-vege-removebg-preview.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import axios from "axios";
+import { Autoplay } from "swiper";
 
 export default function ProductDetail() {
      const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function ProductDetail() {
      return (
           <>
                {data && <div className="flex flex-wrap py-20">
-                    <div className="basis-1/2 text-zinc-500 pr-6 space-y-2">
+                    <div className="w-1/2 text-zinc-500 pr-6 space-y-2">
                          <h2 className="font-bold text-slate-950 text-5xl">{data.name}</h2>
                          <h3 className="capitalize text-2xl">{category}</h3>
                          {data.description && <p>{data.description}</p>}
@@ -67,18 +68,26 @@ export default function ProductDetail() {
                               <button type="submit" className="flex bg-slate-950 text-white gap-2 rounded-full p-2 pr-4 ml-6 hover:text-amber-500 sl-animated-lg"><span className="w-7 h-7 bg-amber-300 rounded-full"><FontAwesomeIcon icon={faBagShopping} /></span> Buy Now</button>
                          </form>
                          {slideData && slideData.length > 0 && <div className="my-6 pt-3">
-                              <h2 className="font-medium text-2xl">May You Also Like:</h2>
-                              <div className="flex flex-wrap gap-6 mt-5">
-                                   {slideData.map(slide => <div key={slide.id} className="relative bg-slate-950 text-center text-white rounded-2xl drop-shadow-2xl py-9 px-5">
-                                        <Link to={`/product/${category}/${slide.id}`} className="absolute inset-0 z-10"></Link>
-                                        <img src={slide.image} alt="" className="w-32 h-32 rounded-full mb-5" />
-                                        <h3 className="font-medium truncate text-lg my-2">{slide.name}</h3>
-                                        <p><span className="text-red-500">$ </span>{slide.price}</p>
-                                   </div>)}
-                              </div>
+                              <h2 className="font-medium text-2xl mb-6">May You Also Like:</h2>
+                              <Swiper modules={[Autoplay]}
+                                   spaceBetween={40}
+                                   slidesPerView={3}
+                                   autoplay={{
+                                        delay: 1500,
+                                        disableOnInteraction: false,
+                                   }}>
+                                   {slideData.map(slide => <SwiperSlide key={slide.id}>
+                                        <div className="relative bg-slate-950 text-center text-white rounded-2xl drop-shadow-2xl py-9 px-5">
+                                             <Link to={`/product/${category}/${slide.id}`} className="absolute inset-0 z-10"></Link>
+                                             <img src={slide.image} alt="" className="w-32 h-32 rounded-full mx-auto mb-5" />
+                                             <h3 className="font-medium truncate text-lg my-2">{slide.name}</h3>
+                                             <p><span className="text-red-500">$ </span>{slide.price}</p>
+                                        </div>
+                                   </SwiperSlide>)}
+                              </Swiper>
                          </div>}
                     </div>
-                    <div className="basis-1/2 pl-4">
+                    <div className="w-1/2 pl-4">
                          <div className="relative w-[35rem] text-white mx-auto">
                               <img src={data.image} alt="" className="relative h-[35rem] object-fill rounded-full overflow-hidden z-40" />
                               <div className="absolute top-3/4 left-1/2 -translate-x-1/2 w-60 bg-amber-400 bg-gradient-to-l from-amber-400 to-amber-500 rounded-b-3xl p-6 pt-40 z-30">
